@@ -1,14 +1,14 @@
 import unittest
 from pathlib import Path
 
-import argparse_schema
+import argparse_from_jsonschema
 
 
 class MyTestCase(unittest.TestCase):
     def test_argparse_schema(self):
         schema_path = Path(__file__).parent / 'argument_config.json'
 
-        result = argparse_schema.parse(schema_path, [
+        result = argparse_from_jsonschema.parse(schema_path, [
             '/path/to/config',
             '--resume',
             '--scale', '2.0'
@@ -20,7 +20,7 @@ class MyTestCase(unittest.TestCase):
             'mode': 'happy'
         })
 
-        result = argparse_schema.parse(schema_path, [
+        result = argparse_from_jsonschema.parse(schema_path, [
             '/path/to/config',
             '--mode',
             'high'

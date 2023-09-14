@@ -1,21 +1,18 @@
-"""
-argparse-schema
-Parse Argument with JSON Schema
-Author: SF-Zhou
-Date: 2019-04-10
-"""
-
 from setuptools import setup
 
-name = 'argparse-schema'
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
+
+name = 'argparse-from-jsonschema'
 module = name.replace("-", "_")
 setup(
     name=name,
-    version='0.0.7',
+    version='0.0.1',
     description='Parse Argument with JSON Schema',
-    url=f'https://github.com/FebruaryBreeze/{name}',
-    author='SF-Zhou',
-    author_email='sfzhou.scut@gmail.com',
+    url=f'https://github.com/LeConTesteur/{name}',
+    author='LeConTesteur',
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     keywords='Argument Schema',
     entry_points={
         'console_scripts': [f'{name}={module}:main'],
