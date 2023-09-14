@@ -30,6 +30,12 @@ pip install argparse-from-jsonschema
       "type": "boolean",
       "description": "resume from checkpoint or not"
     },
+    "foo": {
+      "type": "boolean",
+      "description": "--with-foo for true or --no-foo for false",
+      "false-prefix": "no",
+      "true-prefix": "with"
+    },
     "scale": {
       "type": "number",
       "default": 1.0,
@@ -64,7 +70,7 @@ Run with arguments:
 
 ```bash
 python3 demo.py /path/to/config.py
-#> {'config': '/path/to/config.py', 'resume': False, 'scale': 1.0, 'mode': 'happy'}
+#> {'config': '/path/to/config.py', 'resume': False, 'foo': False 'scale': 1.0, 'mode': 'happy'}
 ```
 
 CLI:
@@ -72,7 +78,7 @@ CLI:
 ```bash
 argparse-from-jsonschema tests/argument_config.json
 #> Show help for schema file [tests/argument_config.json]:
-#> usage: YOUR-COMMAND [-h] [--resume] [--scale SCALE]
+#> usage: YOUR-COMMAND [-h] [--resume] [--with-foo] [--scale SCALE]
 #>                     [--mode {happy,high,heaven}]
 #>                     config
 #>
@@ -84,6 +90,7 @@ argparse-from-jsonschema tests/argument_config.json
 #> optional arguments:
 #>   -h, --help            show this help message and exit
 #>   --resume              resume from checkpoint or not
+#>   --with-foo, --no-foo  --with-foo for true or --no-foo for false
 #>   --scale SCALE         scale of image, [1.0] in default
 #>   --mode {happy,high,heaven}
 #>                         speed mode, [happy] in default

@@ -13,6 +13,12 @@
       "type": "boolean",
       "description": "resume from checkpoint or not"
     },
+    "foo": {
+      "type": "boolean",
+      "description": "--with-foo for true or --no-foo for false",
+      "false-prefix": "no",
+      "true-prefix": "with"
+    },
     "scale": {
       "type": "number",
       "default": 1.0,
