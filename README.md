@@ -1,4 +1,4 @@
-# argparse-schema [![Build Status](https://travis-ci.com/FebruaryBreeze/argparse-schema.svg?branch=master)](https://travis-ci.com/FebruaryBreeze/argparse-schema) [![codecov](https://codecov.io/gh/FebruaryBreeze/argparse-schema/branch/master/graph/badge.svg)](https://codecov.io/gh/FebruaryBreeze/argparse-schema) [![PyPI version](https://badge.fury.io/py/argparse-schema.svg)](https://pypi.org/project/argparse-schema/)
+# argparse-from-jsonschema 
 
 Parse Argument with JSON Schema.
 
@@ -7,7 +7,7 @@ Parse Argument with JSON Schema.
 Need Python 3.6+.
 
 ```bash
-pip install argparse-schema
+pip install argparse-from-jsonschema
 ```
 
 ## Usage
@@ -55,9 +55,9 @@ Python Code:
 
 ```python
 # demo.py
-import argparse_schema
+import argparse_from_jsonschema
 
-print(argparse_schema.parse(schema='./tests/argument_config.json'))
+print(argparse_from_jsonschema.parse(schema='./tests/argument_config.json'))
 ```
 
 Run with arguments:
@@ -70,7 +70,7 @@ python3 demo.py /path/to/config.py
 CLI:
 
 ```bash
-argparse-schema tests/argument_config.json
+argparse-from-jsonschema tests/argument_config.json
 #> Show help for schema file [tests/argument_config.json]:
 #> usage: YOUR-COMMAND [-h] [--resume] [--scale SCALE]
 #>                     [--mode {happy,high,heaven}]
