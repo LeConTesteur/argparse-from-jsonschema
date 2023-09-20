@@ -6,6 +6,7 @@ from typing import Any, Optional, Sequence, Union
 
 import warnings
 
+
 class Kwargs:
     def __init__(self):
         self.type = None
@@ -16,20 +17,25 @@ class Kwargs:
         self.choices: Optional[list] = None
         self.dest: Optional[str] = None
 
+
 _deprecated_default = object()
+
+
 def generate_action(*, true_prefix, false_prefix):
     if not true_prefix and not false_prefix:
         return 'store_true'
+
     class PrefixBooleanAction(argparse.Action):
+        # pylint: disable=too-many-arguments
         def __init__(self,
-                 option_strings,
-                 dest,
-                 default=None,
-                 type=_deprecated_default,
-                 choices=_deprecated_default,
-                 required=False,
-                 help=None,
-                 metavar=_deprecated_default):
+                     option_strings,
+                     dest,
+                     default=None,
+                     type=_deprecated_default, #pylint: disable=redefined-builtin
+                     choices=_deprecated_default,
+                     required=False,
+                     help=None, #pylint: disable=redefined-builtin
+                     metavar=_deprecated_default):
             _option_strings = []
             self.true_prefix = true_prefix
             self.false_prefix = false_prefix
@@ -46,11 +52,12 @@ def generate_action(*, true_prefix, false_prefix):
             #   parser.add_argument('-f', action=BooleanOptionalAction, type=int)
             for field_name in ('type', 'choices', 'metavar'):
                 if locals()[field_name] is not _deprecated_default:
-                    warnings._deprecated(
-                        field_name,
-                        "{name!r} is deprecated as of Python 3.12 and will be "
-                        "removed in Python {remove}.",
-                        remove=(3, 14))
+                    remove=(3, 14)
+                    warnings.warn(
+                        f"{field_name!r} is deprecated as of Python 3.12 and will be "
+                        f"removed in Python {remove}.",
+                        DeprecationWarning
+                        )
 
             if type is _deprecated_default:
                 type = None
@@ -69,19 +76,26 @@ def generate_action(*, true_prefix, false_prefix):
                 required=required,
                 help=help,
                 metavar=metavar)
+
         def __call__(self, parser, namespace, values, option_string=None):
             if option_string in self.option_strings:
-                setattr(namespace, self.dest, not option_string.startswith(f'--{self.false_prefix}-'))
+                setattr(
+                    namespace,
+                    self.dest,
+                    not option_string.startswith(f'--{self.false_prefix}-')
+                )
 
         def format_usage(self):
             return ' | '.join(self.option_strings)
     return PrefixBooleanAction
 
+
 def load_schema(schema: Union[dict, str, Path]) -> dict:
     if not isinstance(schema, dict):
-        with open(str(schema)) as f:
-            schema: dict = json.load(f)
+        with open(str(schema), 'r', encoding="utf8") as schema_file:
+            schema: dict = json.load(schema_file)
     return schema
+
 
 def get_parser(schema: Union[dict, str, Path]) -> argparse.ArgumentParser:
     schema = load_schema(schema)
@@ -113,7 +127,8 @@ def get_parser(schema: Union[dict, str, Path]) -> argparse.ArgumentParser:
             enum_list = value['enum']
             assert len(enum_list) > 0, "Enum List is Empty"
             arg_type = type(enum_list[0])
-            assert all(arg_type is type(item) for item in enum_list), f"Items in [{enum_list}] with Different Types"
+            assert all(arg_type is type(item) for item in enum_list), \
+                f"Items in [{enum_list}] with Different Types"
 
             kwargs.type = arg_type
             kwargs.choices = enum_list
@@ -141,6 +156,7 @@ def get_parser(schema: Union[dict, str, Path]) -> argparse.ArgumentParser:
 
         parser.add_argument(name, **vars(kwargs))
     return parser
+
 
 def parse(schema: Union[dict, str, Path], args: Optional[Sequence[str]] = None) -> dict:
     return vars(get_parser(schema).parse_args(args=args))
