@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "argument_config",
+  "description": "Arg-parse Schema UnitTest",
+  "type": "object",
+  "properties": {
+    "config": {
+      "not": {
+        "type": "string"
+      }
+    }
+  }
+}

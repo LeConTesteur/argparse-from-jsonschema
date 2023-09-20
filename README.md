@@ -49,7 +49,11 @@ pip install argparse-from-jsonschema
       ],
       "default": "happy",
       "description": "speed mode"
-    }
+    },
+    "composition": [
+      {"type": "string", "description": "Only first element is use"},
+      {"type": "null"}
+    ]
   },
   "required": [
     "config"
