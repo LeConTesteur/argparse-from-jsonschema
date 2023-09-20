@@ -7,7 +7,7 @@ name = 'argparse-from-jsonschema'
 module = name.replace("-", "_")
 setup(
     name=name,
-    version='0.0.2',
+    version='0.0.3',
     description='Parse Argument with JSON Schema',
     url=f'https://github.com/LeConTesteur/{name}',
     author='LeConTesteur',
