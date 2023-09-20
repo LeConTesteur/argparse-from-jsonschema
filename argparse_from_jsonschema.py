@@ -77,10 +77,14 @@ def generate_action(*, true_prefix, false_prefix):
             return ' | '.join(self.option_strings)
     return PrefixBooleanAction
 
-def get_parser(schema: Union[dict, str, Path]) -> argparse.ArgumentParser:
+def load_schema(schema: Union[dict, str, Path]) -> dict:
     if not isinstance(schema, dict):
         with open(str(schema)) as f:
             schema: dict = json.load(f)
+    return schema
+
+def get_parser(schema: Union[dict, str, Path]) -> argparse.ArgumentParser:
+    schema = load_schema(schema)
     assert 'type' in schema and schema['type'] == 'object'
     assert 'properties' in schema
 
